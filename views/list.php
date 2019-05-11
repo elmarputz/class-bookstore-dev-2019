@@ -18,7 +18,7 @@ require_once('views/partials/header.php');
     <?php foreach ($categories as $cat) : ?>
         <li role="presentation"
             <?php if ($cat->getId() === $categoryId) { ?>class="active" <?php } ?>>
-            <a href="<?php echo $_SERVER['PHP_SELF'] ?>?view=list&categoryId=<?php echo urlencode($cat->getId()); ?>"><?php $cat->getName(); ?></a></span>
+            <a href="<?php echo $_SERVER['PHP_SELF'] ?>?view=list&categoryId=<?php echo urlencode($cat->getId()); ?>"><?php echo $cat->getName(); ?></a></span>
         </li>
     <?php endforeach; ?>
 </ul>
@@ -28,7 +28,7 @@ require_once('views/partials/header.php');
 <?php if (isset($books)) : ?>
   <?php
   if (sizeof($books) > 0) :
-    require('views/partials/booklist.php');
+    // require('views/partials/booklist.php');
   else :
     ?>
 
