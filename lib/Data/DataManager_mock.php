@@ -3,10 +3,11 @@ namespace Data;
 
 use Bookshop\Category;
 use Bookshop\Book;
+use Bookshop\User;
 
 
 class DataManager implements IDataManager {
-    
+
     /**
      * @param string $type 'categories', 'books', 'users'
      * @return array
@@ -49,5 +50,25 @@ class DataManager implements IDataManager {
     }
 
   // /mock data
+
+
+  public static function getCategories() : array {
+    return self::getMockData('categories');
+  }
+
+  public static function getBooksByCategory (int $categoryId) : array {
+      return array();
+  }
+  public static function getUsersById (int $userId) {
+      throw new \Exception ('not implemented yet');
+  }
+  public static function getUserByUserName(string $userName) {
+    throw new \Exception ('not implemented yet');
+  }
+  public static function createOrder (int $userId, array $bookIds, 
+      string $nameOnCard, string $cardNumber) : int {
+        throw new \Exception ('not implemented yet');
+      }
+
 
 }

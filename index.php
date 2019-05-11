@@ -6,8 +6,6 @@ require_once('inc/bootstrap.php');
 $default_view = 'welcome';
 $view = $default_view;
 
-$b = new Bookshop\Book();
-var_dump($b);
 
 // switch views based on querystring
 if (isset($_REQUEST['view']) && 
