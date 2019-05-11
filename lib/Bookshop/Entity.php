@@ -1,21 +1,34 @@
-<?php 
+<?php
 
 namespace Bookshop;
 
 interface IData {
-    public function getId() : int;
+  public function getId() : int;
 }
 
-class Entity implements IData {
+/**
+ * Entity
+ * 
+ * 
+ * @package    
+ * @subpackage 
+ * @author     John Doe <jd@fbi.gov>
+ */
+class Entity extends BaseObject implements IData {
 
-    private $id;
+  private $id;
 
-    public function __construct(int $id) {
-        $this->id = intval($id);
-    }
+  public function __construct(int $id) {
+    $this->id = intval($id);
+  }
 
-    public function getId() : int {
-        return $this->id;
-    }
+  /**
+   * getter for the private parameter $id
+   *
+   * @return int
+   */
+  public function getId() : int {
+    return $this->id;
+  }
 
 }
