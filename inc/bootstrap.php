@@ -10,3 +10,23 @@ spl_autoload_register (function ($class) {
         include ($filename);
     }
 });
+
+
+/**
+ * 
+ * DataManager 
+ * change to switch between different implementations … 'mock' | 'pdo'
+ */
+$mode = 'mock';
+switch (mb_strtolower($mode)) {
+	case 'mysqli':
+		$class = 'mysqli';
+		break;
+	case 'pdo':
+		$class = 'mysqlpdo';
+		break;
+	default:
+		$class = 'mock';
+		break;
+}
+require_once(__DIR__ . '/../lib/Data/DataManager_' . $class . '.php');
