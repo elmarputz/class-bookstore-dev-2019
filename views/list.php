@@ -28,7 +28,7 @@ require_once('views/partials/header.php');
 <?php if (isset($books)) : ?>
   <?php
   if (sizeof($books) > 0) :
-    // require('views/partials/booklist.php');
+    require('views/partials/booklist.php');
   else :
     ?>
 

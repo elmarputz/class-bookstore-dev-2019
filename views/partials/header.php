@@ -45,7 +45,7 @@
                 </li>
                 */ ?>
                 <li class="dropdown">
-                    <?php if ($user == null): ?>
+                    <?php if (!isset($user) || ($user == null)): ?>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             Not logged in!
                             <b class="caret"></b>
