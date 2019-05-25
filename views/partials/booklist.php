@@ -20,8 +20,7 @@
     <tbody>
   <?php
   foreach ($books as $book):
-    $inCart = false;
-    // $inCart = ShoppingCart::contains($book->getId());
+      $inCart = ShoppingCart::contains($book->getId());
     ?>
     <tr>
       <td><strong>
@@ -35,7 +34,7 @@
 		    <?php echo Util::escape($book->getPrice()); ?>
       </td>
       <td class="add-remove">
-	      <?php /* if ($inCart): ?>
+	      <?php  if ($inCart): ?>
             <form method="post" action="<?php echo Util::action
             (Bookshop\Controller::ACTION_REMOVE, array('bookId' => $book->getId())); ?>">
               <button type="submit" role="button" class="btn btn-default btn-xs btn-info">
@@ -49,7 +48,7 @@
                 <span class="glyphicon glyphicon-plus"></span>
               </button>
             </form>
-	      <?php endif; */ ?>
+	      <?php endif;  ?>
       </td>
     </tr>
   <?php endforeach; ?>

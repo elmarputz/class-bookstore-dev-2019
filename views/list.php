@@ -5,7 +5,7 @@ use Bookshop\Util;
 use Bookshop\ShoppingCart;
 
 $categories = DataManager::getCategories();
-$categoryId = (int) $_REQUEST['categoryId'] ?? null;
+$categoryId = $_REQUEST['categoryId'] ?? null;
 $books = (isset($categoryId) && ($categoryId > 0)) ? DataManager::getBooksByCategory($categoryId) : null;
 
 require_once('views/partials/header.php');
