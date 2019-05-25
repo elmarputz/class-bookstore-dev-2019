@@ -6,7 +6,7 @@ use Bookshop\Util;
 if (AuthenticationManager::isAuthenticated()) {
     Util::redirect("index.php");
 }
-$userName = isset($_REQUEST['userName']) ? $_REQUEST['userName'] : null;
+$userName = $_REQUEST['userName'] ?? null;
 ?>
 
 <?php

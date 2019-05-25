@@ -12,6 +12,8 @@ class Controller extends BaseObject {
     const CC_NAME = 'nameOnCard';
     const ACTION_LOGIN = 'login';
     const ACTION_LOGOUT = 'logout';
+    const USER_NAME = 'userName';
+    const USER_PASSWORD = 'password';
 
     private static $instance = false;
 
@@ -47,6 +49,14 @@ class Controller extends BaseObject {
                 ShoppingCart::remove((int) $_REQUEST['bookId']);
                 Util::redirect();
                 break;    
+
+            case self::ACTION_LOGIN : 
+                if (!AuthenticationManager::authenticate($_REQUEST[self::USER_NAME], 
+                    $_REQUEST[self::USER_PASSWORD])) {
+
+                }
+                Util::redirect();
+                break;
 
             default : 
                 throw new \Exception('Unknown controller action ' . $action);
