@@ -4,6 +4,7 @@ use Data\DataManager;
 use Bookshop\Util;
 use Bookshop\ShoppingCart;
 
+
 $categories = DataManager::getCategories();
 $categoryId = $_REQUEST['categoryId'] ?? null;
 $books = (isset($categoryId) && ($categoryId > 0)) ? DataManager::getBooksByCategory($categoryId) : null;

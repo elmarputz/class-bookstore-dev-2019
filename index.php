@@ -18,6 +18,8 @@ if (isset($_REQUEST['view']) &&
      Bookshop\Controller::getInstance()->invokePostAction();
  }
 
+ 
+
 
 
 require_once('views/' . $view . '.php');

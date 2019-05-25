@@ -53,8 +53,9 @@ class Controller extends BaseObject {
             case self::ACTION_LOGIN : 
                 if (!AuthenticationManager::authenticate($_REQUEST[self::USER_NAME], 
                     $_REQUEST[self::USER_PASSWORD])) {
-
+                    $this->forwardRequest(array('invalid user name or password'));
                 }
+            
                 Util::redirect();
                 break;
 
