@@ -32,7 +32,7 @@
         <?php echo Util::escape($book->getAuthor()); ?>
       </td>
       <td>
-		    <?php echo money_format('%i', Util::escape($book->getPrice())); ?>
+		    <?php echo Util::escape($book->getPrice()); ?>
       </td>
       <td class="add-remove">
 	      <?php /* if ($inCart): ?>
