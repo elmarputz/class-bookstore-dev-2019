@@ -66,12 +66,20 @@ class DataManager implements IDataManager {
     return $res;
   }
 
-  public static function getUsersById (int $userId) {
-      throw new \Exception ('not implemented yet');
+  public static function getUserById (int $userId) {
+     
+    return array_key_exists($userId, self::getMockData('users')) 
+      ? self::getMockData('users')[$userId] : null;
+
   }
   public static function getUserByUserName(string $userName) {
-    throw new \Exception ('not implemented yet');
+    foreach (self::getMockData('users') as $user) {
+      if ($user->getUserName() === $userName)
+        return $user;
+    }
+    return null;
   }
+
   public static function createOrder (int $userId, array $bookIds, 
       string $nameOnCard, string $cardNumber) : int {
         throw new \Exception ('not implemented yet');

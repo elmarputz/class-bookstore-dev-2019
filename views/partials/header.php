@@ -1,5 +1,11 @@
+<?php 
 
+use Bookshop\Util;
+use Bookshop\ShoppingCart;
 
+$cartSize = ShoppingCart::size();
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,12 +44,12 @@
                 <li  <?php if ($view === 'checkout') { ?>class="active"<?php } ?>><a href="index.php?view=checkout">Checkout</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right login">
-                <?php /*
+            
                 <li>
                     <a href="index.php?view=checkout">
                        <span class="badge"><?php echo Util::escape($cartSize); ?></span> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 </li>
-                */ ?>
+              
                 <li class="dropdown">
                     <?php if (!isset($user) || ($user == null)): ?>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -56,7 +62,6 @@
                             </li>
                         </ul>
                     <?php else: ?>
-                    <?php /*
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                   Logged in as  <span class="badge"><?php echo Util::escape($user->getUserName()); ?></span>
                   <b class="caret"></b>
@@ -69,7 +74,7 @@
                     </form>
                     </li>
                   </ul>
-                      */ ?>
+    
               <?php endif; ?>
                 </li>
             </ul> <!-- /. login -->
