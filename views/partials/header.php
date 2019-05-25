@@ -2,8 +2,10 @@
 
 use Bookshop\Util;
 use Bookshop\ShoppingCart;
+use Bookshop\AuthenticationManager;
 
 $cartSize = ShoppingCart::size();
+$user = AuthenticationManager::getAuthenticatedUser();
 
 ?>
 <!DOCTYPE html>
