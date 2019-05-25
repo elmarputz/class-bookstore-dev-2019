@@ -59,6 +59,11 @@ class Controller extends BaseObject {
                 Util::redirect();
                 break;
 
+            case self::ACTION_LOGOUT : 
+                AuthenticationManager::signOut();
+                Util::redirect();
+                break;
+
             default : 
                 throw new \Exception('Unknown controller action ' . $action);
                 break;
