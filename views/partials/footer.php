@@ -6,7 +6,7 @@ if (isset($errors) && is_array($errors)): ?>
     <div class="errors alert alert-danger">
       <ul>
         <?php foreach ($errors as $errMsg): ?>
-          <li><?php echo(Util::escape($errMsg)); ?></li>
+          <li><?php echo(Bookshop\Util::escape($errMsg)); ?></li>
         <?php endforeach; ?>
       </ul>
     </div>
@@ -18,7 +18,7 @@ if (isset($errors) && is_array($errors)): ?>
 
 <!--display cart info-->
         <hr />
-        <?php /*
+        
      <div class="col-sm-8">
       <button class="btn btn-primary btn-xs" type="button">
         <span class="badge"><?php echo Bookshop\Util::escape($cartSize); ?></span> items in cart
@@ -28,7 +28,7 @@ if (isset($errors) && is_array($errors)): ?>
         <div class="col-sm-4 pull-right">
             <p><?php echo Bookshop\Util::escape(strftime('%c')); ?></p>
             </div>
-    */ ?>
+
 
 <!--/display cart info-->
 

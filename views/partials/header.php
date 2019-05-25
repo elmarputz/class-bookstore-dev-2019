@@ -6,6 +6,9 @@ use Bookshop\AuthenticationManager;
 
 $cartSize = ShoppingCart::size();
 $user = AuthenticationManager::getAuthenticatedUser();
+if (isset($_GET['errors'])) {
+    $errors = unserialize(urldecode($_GET['errors']));
+}
 
 ?>
 <!DOCTYPE html>

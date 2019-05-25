@@ -82,7 +82,7 @@ class DataManager implements IDataManager {
 
   public static function createOrder (int $userId, array $bookIds, 
       string $nameOnCard, string $cardNumber) : int {
-        throw new \Exception ('not implemented yet');
+       return rand();
       }
 
 

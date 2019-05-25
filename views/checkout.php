@@ -4,8 +4,8 @@ use Bookshop\ShoppingCart;
 use Bookshop\Util;
 use Bookshop\AuthenticationManager;
 
-$nameOnCard = isset($_REQUEST[\Bookshop\Controller::CC_NAME]) ? $_REQUEST[\Bookshop\Controller::CC_NAME] : null;
-$cardNumber = isset($_REQUEST[\Bookshop\Controller::CC_NUMBER]) ? $_REQUEST[\Bookshop\Controller::CC_NUMBER] : null;
+$nameOnCard = $_REQUEST[\Bookshop\Controller::CC_NAME] ?? null;
+$cardNumber = $_REQUEST[\Bookshop\Controller::CC_NUMBER] ?? null;
 
 require_once('views/partials/header.php');
 $cartSize = ShoppingCart::size();
@@ -59,3 +59,7 @@ $cartSize = ShoppingCart::size();
 <?php else: ?>
 	<p class="errors alert alert-info">Please add some items to your cart first.</p>
 <?php endif; ?>
+
+
+
+<?php require_once('views/partials/footer.php');

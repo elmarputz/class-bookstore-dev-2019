@@ -14,6 +14,7 @@ class Controller extends BaseObject {
     const ACTION_LOGOUT = 'logout';
     const USER_NAME = 'userName';
     const USER_PASSWORD = 'password';
+    const ACTION_ORDER = 'placeOrder';
 
     private static $instance = false;
 
@@ -64,12 +65,62 @@ class Controller extends BaseObject {
                 Util::redirect();
                 break;
 
+            case self::ACTION_ORDER : 
+                $user = AuthenticationManager::getAuthenticatedUser();
+                if ($user == null) {
+                    $this->forwardRequest(array('Not logged in'));
+                    break;
+                }
+                if (!$this->processCheckout($_REQUEST[self::CC_NAME], $_REQUEST[self::CC_NUMBER])) {
+                    $this->forwardRequest(array('checkout failed'));
+                }
+                break;
+
+
             default : 
                 throw new \Exception('Unknown controller action ' . $action);
                 break;
         }
 
     }    
+
+
+    protected function processCheckout (string $nameOnCard = null, 
+        string $cardNumber = null) : bool {
+
+        $errors = array();
+        $nameOnCard = trim($nameOnCard);
+        if ($nameOnCard == null || strlen($nameOnCard) == 0) {
+            $errors[] = 'Invalid name on card';
+        }
+
+        if ($cardNumber == null || strlen($cardNumber) != 16 || !ctype_digit($cardNumber)) {
+            $errors[] = 'Invalid card number (16 digits)';
+        }
+
+        if (sizeof($errors) > 0) {
+            $this->forwardRequest($errors);
+            return false;
+        }
+
+        if (ShoppingCart::size() == 0) {
+            $this->forwardRequest(['Shopping cart is empty']);
+            return false;
+        }
+
+        $user = AuthenticationManager::getAuthenticatedUser();
+        $orderId = \Data\DataManager::createOrder($user->getId(), ShoppingCart::getAll(), 
+            $nameOnCard, $cardNumber);
+
+        if (!$orderId)  {
+            $this->forwardRequest(['error creating order']);
+            return false;
+        }   
+
+        ShoppingCart::clear();
+        Util::redirect('index.php?view=success&orderId=' . rawurlencode($orderId));
+        return true;
+    }
 
 
      /**
