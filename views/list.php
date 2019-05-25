@@ -2,6 +2,7 @@
 
 use Data\DataManager;
 use Bookshop\Util;
+use Bookshop\ShoppingCart;
 
 $categories = DataManager::getCategories();
 $categoryId = (int) $_REQUEST['categoryId'] ?? null;

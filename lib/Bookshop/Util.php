@@ -11,8 +11,7 @@ namespace Bookshop;
    * @return string
    */
   public static function escape(string $string) : string {
-    // return nl2br(htmlentities($string));
-    return $string; 
+    return nl2br(htmlentities($string));
   }
 
   /**
