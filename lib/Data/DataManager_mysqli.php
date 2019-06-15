@@ -216,7 +216,41 @@ class DataManager implements IDataManager {
 
   public static function createOrder (int $userId, array $bookIds, 
       string $nameOnCard, string $cardNumber) : int {
-     
+        
+        $con  = self::getConnection();
+        self::query($con, 'BEGIN;');
+        
+        $nameOnCard = $con->real_escape_string($nameOnCard);
+        $cardNumber = $con->real_escape_string($cardNumber);
+
+        self::query($con, "
+          INSERT INTO orders (
+            userId, 
+            creditCardNumber,
+            creditCardHolder
+          ) VALUES (
+            " . $userId .", 
+            '" . $cardNumber . "',
+            '" . $nameOnCard . "'
+          );
+        ");
+
+        $orderId = intval(self::lastInsertId($con));
+        foreach ($bookIds as $bookId) {
+          self::query($con, "
+            INSERT INTO orderedbooks (
+              orderId, 
+              bookId
+            ) VALUES (
+              " . $orderId . ", 
+              " . $bookId .");  
+          ");
+        }  
+        self::query($con, 'COMMIT;');
+        self::closeConnection($con);
+
+        return $orderId;
+
       }
 
 
