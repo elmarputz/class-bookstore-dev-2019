@@ -95,8 +95,9 @@ class DataManager implements IDataManager {
     $res = self::query($con, "
       SELECT id, categoryId, title, author, price 
       FROM books 
-      WHERE categoryId = ". $categoryId . ";
-    ");
+      WHERE categoryId = ?;", 
+        array($categoryId));
+
     while ($book = self::fetchObject($res)) {
       $books[] = new Book ($book->id, $book->categoryId, $book->title, $book->author, $book->price);
     }
@@ -187,8 +188,8 @@ class DataManager implements IDataManager {
 		$res    = self::query($con, "
       SELECT id, userName, passwordHash 
       FROM users
-      WHERE id = " . $userId . ";
-        ");
+      WHERE id = ?;", array($userId));
+
 		if ($u = self::fetchObject($res)) {
 			$user = new User($u->id, $u->userName, $u->passwordHash);
 		}
@@ -208,12 +209,11 @@ class DataManager implements IDataManager {
 	public static function getUserByUserName(string $userName) {
 		$user     = null;
 		$con      = self::getConnection();
-		$userName = $con->real_escape_string($userName); /* !!! */
 		$res      = self::query($con, "
       SELECT id, userName, passwordHash 
       FROM users 
-      WHERE userName = '" . $userName . "';
-        ");
+      WHERE userName = ?;", array($userName));
+
 		if ($u = self::fetchObject($res)) {
 			$user = new User($u->id, $u->userName, $u->passwordHash);
 		}
@@ -227,22 +227,18 @@ class DataManager implements IDataManager {
       string $nameOnCard, string $cardNumber) : int {
         
         $con  = self::getConnection();
-        self::query($con, 'BEGIN;');
+        $con->beginTransaction();
         
-        $nameOnCard = $con->real_escape_string($nameOnCard);
-        $cardNumber = $con->real_escape_string($cardNumber);
-
+        try {
         self::query($con, "
           INSERT INTO orders (
             userId, 
             creditCardNumber,
             creditCardHolder
           ) VALUES (
-            " . $userId .", 
-            '" . $cardNumber . "',
-            '" . $nameOnCard . "'
+            ?,?,?
           );
-        ");
+        ", array($userId, $cardNumber, $nameOnCard));
 
         $orderId = intval(self::lastInsertId($con));
         foreach ($bookIds as $bookId) {
@@ -251,16 +247,19 @@ class DataManager implements IDataManager {
               orderId, 
               bookId
             ) VALUES (
-              " . $orderId . ", 
-              " . $bookId .");  
-          ");
+              ?,?
+           );  
+          ", array($orderId, $bookId));
         }  
-        self::query($con, 'COMMIT;');
-        self::closeConnection($con);
-
-        return $orderId;
-
+        $con->commit();
+      } 
+      catch (\Exception $e) {
+        $con->rollBack();
+        $orderId = null;
       }
+      self::closeConnection($con);
+      return $orderId;
+    }
 
 
 }
