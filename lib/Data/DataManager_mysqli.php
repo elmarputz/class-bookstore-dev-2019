@@ -80,7 +80,22 @@ class DataManager implements IDataManager {
   }
 
   public static function getBooksByCategory (int $categoryId) : array {
-  
+    $books = array();
+    $con = self::getConnection();
+    $categoryId = intval($categoryId);
+    $res = self::query($con, "
+      SELECT id, categoryId, title, author, price 
+      FROM books 
+      WHERE categoryId = ". $categoryId . ";
+    ");
+    while ($book = self::fetchObject($res)) {
+      $books[] = new Book ($book->id, $book->categoryId, $book->title, $book->author, $book->price);
+    }
+
+    self::close($res);
+    self::closeConnection($con);
+    return $books;
+
   }
 
   public static function getUserById (int $userId) {
